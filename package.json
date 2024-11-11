@@ -1,0 +1,23 @@
+{
+  "name": "a4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "browser-sync start ./ -s --files './' --directory --watch --port 2000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "bootstrap": "^5.2.0",
+    "bootstrap-icons": "^1.9.1",
+    "d3": "^7.6.1",
+    "highlightjs-copy": "^1.0.3",
+    "vega": "^5.22.1",
+    "vega-embed": "^6.21.0",
+    "vega-lite": "^5.5.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.29.3"
+  }
+}

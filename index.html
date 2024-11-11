@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gender Equality Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="./js/d3.v7.js"></script>
+    <script src="./js/d3-format.v2.min.js">
+      
+    </script> <script src="./js/database-operations.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+      <div class="container">
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mx-auto"> 
+            <li class="nav-item">
+              <a class="nav-link" href="./index.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./1_KPI.html" target="_blank">Fact Sheets</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./2_bar_chart.html" target="_blank">Gender Gap in Income</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./3_scatter_plot.html" target="_blank">GDI & GII Tracker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./4_line_chart.html" target="_blank">Women in Labor Force</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./5_table.html" target="_blank">Data Source</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <h1>
+        Gender Equality Tracker: Towards a More Equal World
+      </h1>
+      <p style="margin-left: 30%; margin-bottom: 0;">
+        <b>Data Source:</b>
+        <a href="https://hdr.undp.org/data-center/" target="_blank">United Nations Development Programme</a>, <a href="https://wbl.worldbank.org/" target="_blank">The World Bank</a>.
+      </p>
+      <p style="margin-left: 30%;">
+        <b>Data Updated:</b> 2022
+      </p>
+
+      <p style="margin-left: 100px; margin-right: 100px; border: solid; border-width: 2px; padding: 20px; border-radius: 10px;">
+        Welcome to the <b>Gender Equality Tracker Dashboard</b>. This dashboard serves as a comprehensive tool for understanding and monitoring progress towards gender equality in six countries: <b>Brazil, Canada, China, Germany, India, and the United States</b>. Through a lens that transcends borders and cultures, we aim to shed light on the status of gender equity, providing valuable insights, trends, and data-driven narratives to inform policy decisions, inspire change, and promote inclusivity. You can also access the data used to create this dashboard by clicking the <b>Data Source</b> in the navigation bar.
+      </p>
+    </div>
+    <div id="loading" class="text-center d-none">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div id="error-message" class="alert alert-danger d-none" role="alert">
+    </div>
+    
+    <div style="width: 100%;">
+    <iframe src="./1_KPI.html" frameborder="0" width="49%" height="500px"></iframe>
+    <iframe src="./2_bar_chart.html" frameborder="0" width="49%" height="500px"></iframe>
+    </div>
+    <div style="width: 100%;">
+      <iframe src="./3_scatter_plot.html" frameborder="0" width="50%" height="600px"></iframe>
+      <iframe src="./4_line_chart.html" frameborder="0" width="49%" height="600px"></iframe>
+      </div>
+      <div style="width: 100%;">
+        <iframe src="./5_table.html" frameborder="0" width="100%" height="560px"></iframe>
+        </div>
+  </body>
+</html>

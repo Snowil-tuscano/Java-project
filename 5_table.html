@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Table</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="./js/d3.v7.js"></script>
+    <script src="./js/d3.v7.min.js"></script>
+    <script src="./js/d3-format.v2.min.js"></script>
+  </head>
+  <body>
+    <div id="title" style="text-align: center; ">
+      <h2>Source Data Table</h2>
+    </div>
+    <div id="data-table-container" style="display: flex; flex-direction: column; margin-left: 50px; margin-right: 50px; text-align: center;">
+        <table id="data-table">
+          <thead>
+            <tr style="background-color: #202020; color: white;">
+              <th>CountryID</th>
+              <th>Country</th>
+              <th>Region</th>
+              <th>Income Group</th>
+              <th>Year</th>
+              <th>GDI</th>
+              <th>GII</th>
+              <th>Sex Ratio at Birth</th>
+              <th>Female Maternal Mortality</th>
+              <th>Female Parliament Seat Share</th>
+              <th>Female Secondary Education</th>
+              <th>Male Secondary Education</th>
+              <th>Female Labour Force</th>
+              <th>Male Labour Force</th>
+              <th>Female GNIPerCapita</th>
+              <th>Male GNIPerCapita</th>
+              <th>Women Business and the Law Index Score</th>
+              <th>Female Population</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Data will be populated here using D3.js -->
+          </tbody>
+        </table>
+      </div>
+    
+      <script>
+      // Set color scheme
+      const color = d3.scaleOrdinal().range(d3.schemeSet2);
+
+      // Set data format
+      const currencyformat = d3.format("$,.0f");
+      const numberformat = d3.format(",.0f");
+      const percentformat = d3.format(".0%");
+
+        // 使用D3.js加载CSV数据
+        d3.csv("./data/data.csv").then(function (data) {
+          // 选择表格的<tbody>元素
+          const tableBody = d3.select("#data-table tbody");
+          // 创建数据行并填充数据
+          const rows = tableBody
+            .selectAll("tr")
+            .data(data)
+            .enter()
+            .append("tr");
+    
+          rows
+            .append("td")
+            .text((d) => d.CountryID);
+          rows
+            .append("td")
+            .text((d) => d.Country);
+          rows
+            .append("td")
+            .text((d) => d.Region);
+          rows
+            .append("td")
+            .text((d) => d.IncomeGroup);
+          rows
+            .append("td")
+            .text((d) => d.Year);
+          rows
+            .append("td")
+            .text((d) => d.GDI);
+          rows
+            .append("td")
+            .text((d) => d.GII);
+          rows
+            .append("td")
+            .text((d) => d.SexRatioAtBirth);
+          rows
+            .append("td")
+            .text((d) => d.FemaleMaternalMortality);
+          rows
+            .append("td")
+            .text((d) => d.FemaleParliamentSeatShare);
+          rows
+            .append("td")
+            .text((d) => d.FemaleSecondaryEducation);
+          rows
+            .append("td")
+            .text((d) => d.MaleSecondaryEducation);
+          rows
+            .append("td")
+            .text((d) => d.FemaleLabourForce);
+          rows
+            .append("td")
+            .text((d) => d.MaleLabourForce);
+          rows
+            .append("td")
+            .text((d) => d.FemaleGNIPerCapita);
+          rows
+            .append("td")
+            .text((d) => d.MaleGNIPerCapita);
+          rows
+            .append("td")
+            .text((d) => d.WomenBusinessandtheLawIndexScore);
+          rows
+            .append("td")
+            .text((d) => d.FemalePopulation);
+
+
+
+        });
+      </script>
+    </body>
+  </html>

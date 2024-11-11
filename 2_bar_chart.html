@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bar Chart</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="./js/d3.v7.js"></script>
+    <script src="./js/d3.v7.min.js"></script>
+    <script src="./js/d3.v7.min.js"></script>
+    <script src="./js/d3-format.v2.min.js"></script>
+  </head>
+  <body>
+    <div id="title" style="text-align: center;">
+      <h2>Gender Gap in Estimated Gross National Income Per Capita in 2022</h2>
+    </div>
+    <div style="text-align: center;">
+    <svg id="pyramid-chart" style="display: inline-block; vertical-align: top; " width="835" height="400" viewBox="0 0 835 400" ></svg>
+    <script>
+      // Set color scheme
+      const color = d3.scaleOrdinal(d3.schemeSet2);
+      // Set data format
+      const currencyformat = d3.format("$,.0f");
+      const numberformat = d3.format(",.0f");
+      const percentformat = d3.format(".1%");
+        d3.csv("./data/data.csv").then(function (data) {
+          console.log(data)
+
+        // Combine data for Female and Male
+        const combinedData = [];
+        data.forEach(d => {
+            combinedData.push({ Gender: "Female", Country: d.Country, CountryID: d.CountryID, Year: d.Year, GNIPerCapita: d.FemaleGNIPerCapita });
+            combinedData.push({ Gender: "Male", Country: d.Country, CountryID: d.CountryID, Year: d.Year, GNIPerCapita: d.MaleGNIPerCapita });
+        });
+
+        const svg = d3.select("#pyramid-chart")
+        .attr("font-family", "Montserrat")
+        .attr("font-size", "14px");
+
+        var height = svg.attr("height");
+        var width = svg.attr("width");
+        var margin = {top: 10, right: 80, bottom: 20, left: 80}
+
+
+        var  xM = d3.scaleLinear()
+    .domain([0, d3.max(combinedData, d => d.GNIPerCapita)])
+    .rangeRound([width / 2, margin.left])
+
+    var xF = d3.scaleLinear()
+    .domain(xM.domain())
+    .rangeRound([width / 2, width - margin.right])
+
+    var y = d3.scaleBand()
+    .domain(combinedData.map(d => d.Country))
+    .rangeRound([height - margin.bottom, margin.top])
+    .padding(0.1)
+
+    var xAxis = g => g
+    .attr("transform", `translate(0,${height - margin.bottom})`)
+    .call(g => g.append("g").call(d3.axisBottom(xM).ticks(width / 80, "s")))
+    .call(g => g.append("g").call(d3.axisBottom(xF).ticks(width / 80, "s")))
+    .call(g => g.selectAll(".domain").remove())
+    .call(g => g.selectAll(".tick:first-of-type").remove())
+    .call(g => g.selectAll(".tick text")
+    .attr("font-family", "Montserrat")
+    .attr("font-weight", "400")
+    .attr("font-size", "12px"))
+
+
+    var yAxis = g => g
+    .attr("transform", `translate(${xM(0)},0)`)
+    .call(d3.axisLeft(y).tickSizeOuter(0))
+    .call(g => g.selectAll(".tick text")
+    .attr("fill", "white")
+    .attr("font-family", "Montserrat")
+    .attr("font-weight", "700")
+    .attr("font-size", "12px"))
+
+
+  svg.append("g")
+    .selectAll("rect")
+    .data(combinedData)
+    .join("rect")
+      .attr("fill", d => d3.schemeSet1[d.Gender === "Male" ? 1 : 0])
+      .attr("x", d => d.Gender === "Male" ? xM(d.GNIPerCapita) : xF(0))
+      .attr("y", d => y(d.Country))
+      .attr("width", d => d.Gender === "Male" ? xM(0) - xM(d.GNIPerCapita) : xF(d.GNIPerCapita) - xF(0))
+      .attr("height", y.bandwidth());
+
+  svg.append("g")
+      .attr("fill", "white")
+    .selectAll("text")
+    .data(combinedData)
+    .join("text")
+      .attr("text-anchor", d => d.Gender === "Male" ? "start" : "end")
+      .attr("x", d => d.Gender === "Male" ? xM(d.GNIPerCapita) - 56 : xF(d.GNIPerCapita) + 56)
+      .attr("fill", d => d3.schemeSet1[d.Gender === "Male" ? 1 : 0])
+      .attr("font-weight", "400")
+      .attr("y", d => y(d.Country) + y.bandwidth() / 2 - 10)
+      .attr("dy", "1.2em")
+      .text(d => d3.format("$,.0f")(d.GNIPerCapita));
+
+  svg.append("text")
+      .attr("text-anchor", "end")
+      .attr("fill", "white")
+      .attr("dy", "12px")
+      .attr("x", xM(0) - 45)
+      .attr("y", y(combinedData[0].Country) + y.bandwidth() / 2 + 10)
+      .text("Male")
+      .attr("font-size", "12px");
+
+  svg.append("text")
+      .attr("text-anchor", "start")
+      .attr("fill", "white")
+      .attr("dy", "12px")
+      .attr("x", xF(0) + 2)
+      .attr("y", y(combinedData[0].Country) + y.bandwidth() / 2 + 10)
+      .text("Female")
+      .attr("font-size", "12px");
+
+  svg.append("g")
+      .call(xAxis);
+
+  svg.append("g")
+      .call(yAxis);
+
+          });
+    </script>
+    </div>
+</body>
+</html>

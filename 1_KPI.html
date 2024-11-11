@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fact Sheets of Gender Equality</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="./js/d3.v7.js"></script>
+    <script src="./js/d3.v7.min.js"></script>
+    <script src="./js/d3-format.v2.min.js"></script>
+    <style>
+    </style>
+  </head>
+  <body>
+    <div style="text-align: center;">
+        <h2>Fact Sheets about Women in the World</h2>
+        
+      </div>
+    <div class="dashboard" style="flex-direction: row;">
+      <div class="kpi" id="world-female-ppl" style="width: 240px; margin-bottom: 10px;"></div>
+      <div class="kpi" id="world-female-gni-per-capita" style="width: 240px; margin-top: 10px; margin-bottom: 10px;"></div>
+    </div>
+    <div class="dashboard" style="flex-direction: row;">
+      <div class="kpi" id="world-female-labor-force" style="width: 240px; margin-top: 10px; margin-bottom: 10px;"></div>
+      <div class="kpi" id="world-female-2nd-edu" style="width: 240px; margin-top: 10px; margin-bottom: 10px;"></div>
+  </div>
+  <div class="dashboard" style="flex-direction: row;">
+    <div class="kpi" id="world-female-parliament" style="width: 240px; margin-top: 10px; margin-bottom: 10px;"></div>
+    <div class="kpi" id="world-female-maternal-mortality" style="width: 240px; margin-top: 10px; margin-bottom: 10px;"></div>
+  </div>
+    <script>
+      // Set color scheme
+      const color = d3.scaleOrdinal().range(d3.schemeSet2);
+
+      // Set data format
+      const currencyformat = d3.format("$,.0f");
+      const numberformat = d3.format(",.0f");
+      const percentformat = d3.format(".1%");
+
+      // import data
+      d3.csv("./data/data.csv").then(function (data) {
+        const FemalePopulation = d3.select("#world-female-ppl");
+        FemalePopulation
+          .text(numberformat(data.find(function (d) {
+          return (d.Country === 'World' && +d.Year === 2024);
+        })["FemalePopulation"]))
+          .style("font-size", "32px")
+          .style("font-weight", "700");
+
+        FemalePopulation
+          .append("div")
+          .html("Total Female Population in 2022")
+          .attr("text-anchor", "middle")
+          .style("font-size", "14px")
+          .style("font-weight", "400");
+
+        const FemaleParliamentSeatShare = d3.select("#world-female-parliament");
+        FemaleParliamentSeatShare
+          .text(percentformat(data.find(function (d) {
+          return (d.Country === 'World' && +d.Year === 2024);
+        })["FemaleParliamentSeatShare"]))
+          .style("font-size", "32px")
+          .style("font-weight", "700");
+        
+        FemaleParliamentSeatShare
+          .append("div")
+          .html("Share of Seats Held by Women in Natioanal Parliament in 2022")
+          .attr("text-anchor", "middle")
+          .style("font-size", "14px")
+          .style("font-weight", "400");
+
+
+      const Female2ndEdu = d3.select("#world-female-2nd-edu");
+      Female2ndEdu
+        .text(percentformat(data.find(function (d) {
+        return (d.Country === 'World' && +d.Year === 2024);
+      })["FemaleSecondaryEducation"]))
+        .style("font-size", "32px")
+        .style("font-weight", "700");
+
+      Female2ndEdu
+        .append("div")
+        .html("% of Female Population Ages 25+ with Secondary Education in 2022")
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
+
+      const FemaleGniPerCapita = d3.select("#world-female-gni-per-capita");
+      FemaleGniPerCapita
+        .text(currencyformat(data.find(function (d) {
+        return (d.Country === 'World' && +d.Year === 2024);
+      })["FemaleGNIPerCapita"]))
+        .style("font-size", "32px")
+        .style("font-weight", "700");
+
+      FemaleGniPerCapita
+        .append("div")
+        .html("Female GNI per Capita in 2022")
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
+
+
+      const FemaleLaborForce = d3.select("#world-female-labor-force");
+      FemaleLaborForce
+        .text(percentformat(data.find(function (d) {
+        return (d.Country === 'World' && +d.Year === 2024);
+      })["FemaleLabourForce"]))
+        .style("font-size", "32px")
+        .style("font-weight", "700");
+
+      FemaleLaborForce
+        .append("div")
+        .html("% of Female Population Ages 15+ in the Labor Force in 2022")
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
+
+
+      const FemaleMaternalMortality = d3.select("#world-female-maternal-mortality");
+      FemaleMaternalMortality
+        .text(numberformat(data.find(function (d) {
+        return (d.Country === 'World' && +d.Year === 2024);
+      })["FemaleMaternalMortality"]))
+        .style("font-size", "32px")
+        .style("font-weight", "700");
+
+      FemaleMaternalMortality
+        .append("div")
+        .html("Maternal Death Per 100,000 Live Births in 2022")
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "400");
+
+      });
+    </script>
+  </body>
+</html>
